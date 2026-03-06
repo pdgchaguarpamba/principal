@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto Digital Gratuito Chaguarpamba | Conectividad y Desarrollo</title>
+    <meta name="description" content="Sitio oficial del Punto Digital Gratuito de Chaguarpamba. Acceso gratuito a internet, capacitaciones y trámites en línea para la comunidad.">
+    
+    <!-- SEO & Social Media -->
+    <meta property="og:title" content="Punto Digital Gratuito Chaguarpamba">
+    <meta property="og:description" content="Impulsando la transformación digital en Chaguarpamba.">
+    <meta property="og:type" content="website">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Scripts & Frameworks -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --azul-principal: #003087;
+            --azul-secundario: #005EB8;
+            --azul-acento: #00A3E0;
+            --gris-fondo: #F8F9FA;
+            --texto-oscuro: #1F2A44;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--texto-oscuro);
+            background-color: var(--gris-fondo);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .bg-gob-blue { background-color: var(--azul-principal); }
+        .text-gob-blue { color: var(--azul-principal); }
+        .bg-gob-accent { background-color: var(--azul-acento); }
+        .border-gob-blue { border-color: var(--azul-principal); }
+
+        /* Animaciones */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hover-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hover-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px -5px rgba(0, 48, 135, 0.1);
+        }
+
+        /* Tabs Styles */
+        .tab-active {
+            border-bottom: 3px solid var(--azul-acento);
+            color: var(--azul-principal);
+            font-weight: 600;
+        }
+
+        /* Modal Overlay */
+        #modalOverlay {
+            background-color: rgba(0, 48, 135, 0.85);
+            backdrop-filter: blur(4px);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #modalContent {
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-show #modalOverlay { display: flex; opacity: 1; }
+        .modal-show #modalContent { transform: scale(1); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: var(--azul-principal); border-radius: 4px; }
+
+        /* Spinner */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--azul-acento);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- ==================== HEADER & NAVIGATION ==================== -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 lg:px-8 py-3 flex justify-between items-center">
+            <!-- Logo Area -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="navigate('inicio')">
+                <div class="w-12 h-12 bg-gob-blue rounded-full flex items-center justify-center text-white">
+                    <i data-lucide="monitor"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-gob-blue text-sm md:text-lg leading-tight uppercase">Punto Digital Gratuito</h1>
+                    <p class="text-xs font-semibold text-gray-500 tracking-widest uppercase">Chaguarpamba</p>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+                <a href="javascript:void(0)" onclick="navigate('inicio')" class="nav-link hover:text-gob-blue transition-colors">Inicio</a>
+                <div class="relative group">
+                    <button class="flex items-center space-x-1 hover:text-gob-blue">
+                        <span>Institución</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-48 bg-white border border-gray-100 shadow-xl rounded-lg hidden group-hover:block animate-fade-in">
+                        <a href="javascript:void(0)" onclick="navigate('sobre-nosotros')" class="block px-4 py-3 hover:bg-gray-50 text-gray-700">Sobre Nosotros</a>
+                        <a href="javascript:void(0)" onclick="navigate('mision-vision')" class="block px-4 py-3 hover:bg-gray-50 text-gray-700">Misión y Visión</a>
+                    </div>
+                </div>
+                <a href="javascript:void(0)" onclick="navigate('servicios')" class="nav-link hover:text-gob-blue transition-colors">Servicios</a>
+                <a href="javascript:void(0)" onclick="navigate('capacitaciones')" class="nav-link hover:text-gob-blue transition-colors">Capacitaciones</a>
+                <a href="javascript:void(0)" onclick="navigate('contacto')" class="nav-link hover:text-gob-blue transition-colors">Contacto</a>
+                <button onclick="navigate('capacitaciones')" class="bg-gob-blue text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-blue-900 transition-all shadow-lg active:scale-95">
+                    Acceder al Punto
+                </button>
+            </nav>
+
+            <!-- Mobile Toggle -->
+            <button class="lg:hidden p-2 text-gob-blue" onclick="toggleMenu()">
+                <i data-lucide="menu" id="menuIcon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-gray-100 pb-6 px-4 absolute w-full shadow-lg">
+            <div class="flex flex-col space-y-4 pt-4">
+                <a href="javascript:void(0)" onclick="navigate('inicio')" class="text-gob-blue font-semibold">Inicio</a>
+                <a href="javascript:void(0)" onclick="navigate('sobre-nosotros')" class="text-gray-600">Sobre Nosotros</a>
+                <a href="javascript:void(0)" onclick="navigate('mision-vision')" class="text-gray-600">Misión y Visión</a>
+                <a href="javascript:void(0)" onclick="navigate('servicios')" class="text-gray-600">Servicios</a>
+                <a href="javascript:void(0)" onclick="navigate('capacitaciones')" class="text-gray-600">Capacitaciones</a>
+                <a href="javascript:void(0)" onclick="navigate('contacto')" class="text-gray-600">Contacto</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="mainContent" class="flex-grow">
+        <!-- Las vistas se cargan dinámicamente aquí -->
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-slate-900 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6 flex items-center">
+                        <i data-lucide="map-pin" class="mr-2 w-5 h-5 text-gob-accent"></i> Ubicación
+                    </h3>
+                    <p class="text-sm leading-relaxed mb-4">
+                        Av. Central y 10 de Agosto (Junto al GAD Municipal)<br>
+                        Chaguarpamba, Loja - Ecuador
+                    </p>
+                    <p class="text-sm"><strong>Lunes a Viernes:</strong> 07:30 - 16:30</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6 flex items-center">
+                        <i data-lucide="link" class="mr-2 w-5 h-5 text-gob-accent"></i> Enlaces Útiles
+                    </h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-white transition-colors">Gobierno del Ecuador</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Ministerio de Telecomunicaciones</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">MINTEL - Puntos Digitales</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Portal de Trámites Ciudadanos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6 flex items-center">
+                        <i data-lucide="phone" class="mr-2 w-5 h-5 text-gob-accent"></i> Contacto Directo
+                    </h3>
+                    <p class="text-sm mb-2">consultas@puntosdigitales.gob.ec</p>
+                    <p class="text-sm font-bold text-white">+593 98 854 6853</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6">Redes Sociales</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gob-blue transition-all">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gob-blue transition-all">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gob-blue transition-all">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs">
+                <p>&copy; 2026 Punto Digital Gratuito Chaguarpamba. Todos los derechos reservados.</p>
+                <p class="mt-4 md:mt-0 italic">Transformación Digital para el Desarrollo Nacional</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== MODAL DE INSCRIPCIÓN ==================== -->
+    <div id="modalOverlay" class="fixed inset-0 z-[100] items-center justify-center p-4">
+        <div id="modalContent" class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+                <i data-lucide="x"></i>
+            </button>
+            
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <span class="inline-block px-3 py-1 bg-blue-50 text-gob-blue text-xs font-bold rounded-full mb-3 uppercase tracking-wider">Formulario Oficial</span>
+                    <h3 class="text-2xl font-bold text-gob-blue">Inscripción a Capacitaciones</h3>
+                    <p class="text-gray-500 mt-2">Completa tus datos para reservar tu cupo presencial.</p>
+                </div>
+
+                <form id="enrollmentForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="col-span-2 md:col-span-1">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Nombre Completo</label>
+                        <input type="text" name="nombre" required placeholder="Ej: Juan Pérez" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-gob-blue outline-none transition-all">
+                    </div>
+                    <div class="col-span-2 md:col-span-1">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Cédula de Identidad</label>
+                        <input type="text" name="cedula" required pattern="[0-9]{10}" placeholder="10 dígitos" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-gob-blue outline-none transition-all">
+                    </div>
+                    <div class="col-span-2 md:col-span-1">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Teléfono / WhatsApp</label>
+                        <input type="tel" name="telefono" required placeholder="09XXXXXXXX" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-gob-blue outline-none transition-all">
+                    </div>
+                    <div class="col-span-2 md:col-span-1">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Correo Electrónico</label>
+                        <input type="email" name="email" required placeholder="tu@correo.com" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-gob-blue outline-none transition-all">
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Curso Seleccionado</label>
+                        <select name="curso" required class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-gob-blue outline-none transition-all bg-white">
+                            <option value="">Seleccione un curso...</option>
+                            <option value="Alfabetización Digital">Alfabetización Digital para Adultos</option>
+                            <option value="Herramientas Ofimáticas">Manejo de Office (Word, Excel, PP)</option>
+                            <option value="Diseño con Canva">Diseño Creativo con Canva</option>
+                            <option value="Marketing Digital">Introducción al Marketing Digital</option>
+                            <option value="Seguridad en Internet">Ciberseguridad Ciudadana</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Mensaje Adicional (Opcional)</label>
+                        <textarea name="mensaje" rows="2" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-gob-blue outline-none transition-all"></textarea>
+                    </div>
+
+                    <div class="col-span-2 mt-4">
+                        <button type="submit" id="submitBtn" class="w-full bg-gob-blue text-white font-bold py-4 rounded-xl hover:bg-blue-900 transition-all flex items-center justify-center shadow-lg active:scale-95">
+                            <span id="btnText">ENVIAR INSCRIPCIÓN</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div id="formFeedback" class="hidden mt-4 p-4 rounded-lg text-center font-medium"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== CONFIGURACIÓN DE VISTAS ====================
+        const views = {
+            inicio: `
+                <section class="relative h-[600px] flex items-center overflow-hidden bg-gob-blue">
+                    <div class="absolute inset-0 z-0">
+                        <div class="absolute inset-0 bg-gradient-to-r from-gob-blue via-transparent to-transparent z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80" alt="Tecnología" class="w-full h-full object-cover opacity-50 parallax-bg">
+                    </div>
+                    <div class="container mx-auto px-4 lg:px-8 relative z-20">
+                        <div class="max-w-2xl text-white fade-up">
+                            <span class="inline-block px-4 py-1.5 bg-gob-accent text-white text-xs font-bold rounded-full mb-6 uppercase tracking-widest">Gobierno del Encuentro</span>
+                            <h2 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">Chaguarpamba <br><span class="text-gob-accent">Más Digital</span></h2>
+                            <p class="text-lg md:text-xl mb-10 text-blue-50 leading-relaxed opacity-90">
+                                Facilitamos el acceso gratuito a las tecnologías de la información para impulsar el desarrollo económico y social de nuestra comunidad.
+                            </p>
+                            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                                <button onclick="navigate('servicios')" class="bg-gob-accent px-8 py-4 rounded-xl font-bold hover:brightness-110 transition-all shadow-xl">Ver Servicios Gratuitos</button>
+                                <button onclick="navigate('sobre-nosotros')" class="bg-white/10 backdrop-blur-md border border-white/30 px-8 py-4 rounded-xl font-bold hover:bg-white/20 transition-all">Nuestra Historia</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-20 bg-white">
+                    <div class="container mx-auto px-4 lg:px-8">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="bg-blue-50 p-8 rounded-3xl border border-blue-100 hover-card text-center">
+                                <h4 class="text-4xl font-bold text-gob-blue mb-2" id="counterPuntos">0</h4>
+                                <p class="text-gray-600 font-semibold uppercase text-xs tracking-widest">Puntos Digitales a nivel nacional</p>
+                            </div>
+                            <div class="bg-blue-50 p-8 rounded-3xl border border-blue-100 hover-card text-center">
+                                <h4 class="text-4xl font-bold text-gob-blue mb-2">100%</h4>
+                                <p class="text-gray-600 font-semibold uppercase text-xs tracking-widest">Acceso Gratuito</p>
+                            </div>
+                            <div class="bg-blue-50 p-8 rounded-3xl border border-blue-100 hover-card text-center">
+                                <h4 class="text-4xl font-bold text-gob-blue mb-2">+500</h4>
+                                <p class="text-gray-600 font-semibold uppercase text-xs tracking-widest">Ciudadanos Beneficiados en 2024</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-24 bg-gray-50">
+                    <div class="container mx-auto px-4 lg:px-8 flex flex-col lg:flex-row items-center gap-16">
+                        <div class="lg:w-1/2">
+                            <h2 class="text-3xl md:text-4xl font-bold text-gob-blue mb-6">¿Qué es un Punto Digital?</h2>
+                            <p class="text-gray-600 leading-relaxed mb-8">
+                                Es un espacio público de participación y aprendizaje, diseñado para que la ciudadanía tenga acceso a Internet y aprenda a usar las Tecnologías de la Información y Comunicación (TIC).
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+                                <div class="flex items-center space-x-3 text-gob-blue font-semibold">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-gob-accent"></i>
+                                    <span>Internet de Fibra Óptica</span>
+                                </div>
+                                <div class="flex items-center space-x-3 text-gob-blue font-semibold">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-gob-accent"></i>
+                                    <span>Certificados con Aval</span>
+                                </div>
+                                <div class="flex items-center space-x-3 text-gob-blue font-semibold">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-gob-accent"></i>
+                                    <span>Trámites del Estado</span>
+                                </div>
+                                <div class="flex items-center space-x-3 text-gob-blue font-semibold">
+                                    <i data-lucide="check-circle" class="w-5 h-5 text-gob-accent"></i>
+                                    <span>Asesoría Tecnológica</span>
+                                </div>
+                            </div>
+                            <button onclick="navigate('mision-vision')" class="text-gob-blue font-bold flex items-center group">
+                                Conocer más objetivos <i data-lucide="arrow-right" class="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                        <div class="lg:w-1/2 relative">
+                            <div class="rounded-3xl overflow-hidden shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80" alt="Oficina" class="w-full h-full object-cover">
+                            </div>
+                            <div class="absolute -bottom-10 -left-10 bg-white p-6 rounded-2xl shadow-xl hidden md:block">
+                                <div class="flex items-center space-x-4">
+                                    <div class="bg-gob-accent p-3 rounded-lg text-white">
+                                        <i data-lucide="wifi"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-gob-blue">Conexión Segura</p>
+                                        <p class="text-xs text-gray-500">Filtrado de contenido educativo</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            'sobre-nosotros': `
+                <section class="py-16 bg-gob-blue text-white">
+                    <div class="container mx-auto px-4 lg:px-8 text-center">
+                        <h2 class="text-4xl font-bold mb-4">Nuestra Historia</h2>
+                        <p class="text-blue-100 max-w-2xl mx-auto">Conoce el origen de la transformación digital en nuestra parroquia.</p>
+                    </div>
+                </section>
+                <section class="py-20 bg-white">
+                    <div class="container mx-auto px-4 lg:px-8 max-w-4xl">
+                        <div class="prose prose-lg text-gray-600 leading-relaxed">
+                            <p class="mb-6">El Programa de Puntos Digitales Gratuitos nació bajo la iniciativa del Ministerio de Telecomunicaciones y de la Sociedad de la Información (MINTEL) como respuesta a la brecha digital existente en las zonas rurales del Ecuador.</p>
+                            <p class="mb-6">En <strong>Chaguarpamba</strong>, el punto digital se estableció en el año 2012 (anteriormente conocidos como Infocentros), convirtiéndose rápidamente en el núcleo de la actividad tecnológica de la parroquia. Desde su apertura, ha servido como puente para que jóvenes realicen sus tareas, adultos aprendan a usar correos electrónicos y emprendedores promocionen sus productos en línea.</p>
+                            <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80" class="w-full rounded-2xl my-8 shadow-lg" alt="Colaboración">
+                            <h3 class="text-2xl font-bold text-gob-blue mt-10 mb-4">Crecimiento Constante</h3>
+                            <p>Actualmente, el Punto Digital Gratuito Chaguarpamba cuenta con equipos de última generación y conexión de banda ancha, permitiendo no solo la navegación libre sino la realización de cursos certificados que son fundamentales para el CV de nuestra ciudadanía.</p>
+                        </div>
+                    </div>
+                </section>
+            `,
+            'mision-vision': `
+                <section class="py-20 bg-gray-50">
+                    <div class="container mx-auto px-4 lg:px-8">
+                        <div class="flex flex-col md:flex-row gap-12">
+                            <div class="md:w-1/2 bg-white p-12 rounded-3xl shadow-sm border border-gray-100">
+                                <div class="w-16 h-16 bg-gob-blue rounded-2xl flex items-center justify-center text-white mb-8">
+                                    <i data-lucide="target" class="w-8 h-8"></i>
+                                </div>
+                                <h3 class="text-3xl font-bold text-gob-blue mb-6">Misión Oficial</h3>
+                                <p class="text-gray-600 leading-relaxed text-lg">
+                                    Promover la democratización del acceso a las Tecnologías de la Información y Comunicación, brindando conectividad y capacitación gratuita para reducir la brecha digital y fomentar el desarrollo socioeconómico de Chaguarpamba.
+                                </p>
+                            </div>
+                            <div class="md:w-1/2 bg-white p-12 rounded-3xl shadow-sm border border-gray-100">
+                                <div class="w-16 h-16 bg-gob-accent rounded-2xl flex items-center justify-center text-white mb-8">
+                                    <i data-lucide="eye" class="w-8 h-8"></i>
+                                </div>
+                                <h3 class="text-3xl font-bold text-gob-blue mb-6">Visión</h3>
+                                <p class="text-gray-600 leading-relaxed text-lg">
+                                    Ser el principal referente de innovación y desarrollo tecnológico en el cantón, reconocido por transformar la vida de la ciudadanía a través del conocimiento digital y la facilitación de servicios públicos eficientes.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-20 text-center max-w-3xl mx-auto">
+                            <h3 class="text-2xl font-bold text-gob-blue mb-8">Objetivos Estratégicos</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-4 bg-white rounded-xl shadow-sm text-left flex items-center space-x-4 border-l-4 border-gob-blue">
+                                    <span class="text-gob-blue font-bold">01.</span>
+                                    <span class="text-sm font-medium text-gray-700">Fomentar el teletrabajo y la educación virtual.</span>
+                                </div>
+                                <div class="p-4 bg-white rounded-xl shadow-sm text-left flex items-center space-x-4 border-l-4 border-gob-blue">
+                                    <span class="text-gob-blue font-bold">02.</span>
+                                    <span class="text-sm font-medium text-gray-700">Apoyar al emprendimiento local mediante el eCommerce.</span>
+                                </div>
+                                <div class="p-4 bg-white rounded-xl shadow-sm text-left flex items-center space-x-4 border-l-4 border-gob-blue">
+                                    <span class="text-gob-blue font-bold">03.</span>
+                                    <span class="text-sm font-medium text-gray-700">Garantizar la seguridad digital ciudadana.</span>
+                                </div>
+                                <div class="p-4 bg-white rounded-xl shadow-sm text-left flex items-center space-x-4 border-l-4 border-gob-blue">
+                                    <span class="text-gob-blue font-bold">04.</span>
+                                    <span class="text-sm font-medium text-gray-700">Facilitar trámites gubernamentales en línea.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            servicios: `
+                <section class="py-16 bg-slate-50 border-b border-gray-100">
+                    <div class="container mx-auto px-4 lg:px-8 text-center">
+                        <span class="text-gob-accent font-bold uppercase tracking-widest text-xs">Beneficios Gratuitos</span>
+                        <h2 class="text-4xl font-bold text-gob-blue mt-2 mb-4">Nuestros Servicios</h2>
+                        <p class="text-gray-500 max-w-xl mx-auto">Todos nuestros servicios son financiados por el Estado y no tienen costo alguno para el ciudadano.</p>
+                    </div>
+                </section>
+                <section class="py-20">
+                    <div class="container mx-auto px-4 lg:px-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <!-- Servicio 1 -->
+                            <div class="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover-card text-center">
+                                <div class="w-20 h-20 bg-blue-50 text-gob-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="wifi" class="w-10 h-10"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-gob-blue mb-3">Acceso Libre a Internet</h4>
+                                <p class="text-gray-500 text-sm leading-relaxed">Navegación de alta velocidad para investigación escolar, universitaria y consultas generales.</p>
+                            </div>
+                            <!-- Servicio 2 -->
+                            <div class="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover-card text-center">
+                                <div class="w-20 h-20 bg-blue-50 text-gob-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="file-text" class="w-10 h-10"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-gob-blue mb-3">Trámites Gubernamentales</h4>
+                                <p class="text-gray-500 text-sm leading-relaxed">Asesoría para obtención de certificados del Registro Civil, IESS, ANT, SRI y más.</p>
+                            </div>
+                            <!-- Servicio 3 -->
+                            <div class="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover-card text-center">
+                                <div class="w-20 h-20 bg-blue-50 text-gob-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="graduation-cap" class="w-10 h-10"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-gob-blue mb-3">Capacitaciones TIC</h4>
+                                <p class="text-gray-500 text-sm leading-relaxed">Cursos presenciales y virtuales con certificación avalada por el MINTEL.</p>
+                            </div>
+                            <!-- Servicio 4 -->
+                            <div class="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover-card text-center">
+                                <div class="w-20 h-20 bg-blue-50 text-gob-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="user-check" class="w-10 h-10"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-gob-blue mb-3">Asesoría Tecnológica</h4>
+                                <p class="text-gray-500 text-sm leading-relaxed">Ayuda personalizada para el uso de dispositivos, creación de correos y seguridad digital.</p>
+                            </div>
+                            <!-- Servicio 5 -->
+                            <div class="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover-card text-center">
+                                <div class="w-20 h-20 bg-blue-50 text-gob-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="printer" class="w-10 h-10"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-gob-blue mb-3">Servicios de Ofimática</h4>
+                                <p class="text-gray-500 text-sm leading-relaxed">Escaneo de documentos y uso de herramientas como Word y Excel para tareas.</p>
+                            </div>
+                            <!-- Servicio 6 -->
+                            <div class="bg-white p-10 rounded-3xl shadow-sm border border-gray-100 hover-card text-center">
+                                <div class="w-20 h-20 bg-blue-50 text-gob-blue rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i data-lucide="briefcase" class="w-10 h-10"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-gob-blue mb-3">Apoyo al Emprendimiento</h4>
+                                <p class="text-gray-500 text-sm leading-relaxed">Capacitación en uso de redes sociales para negocios y diseño gráfico básico.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            capacitaciones: `
+                <section class="py-16 bg-gob-blue text-white">
+                    <div class="container mx-auto px-4 lg:px-8 text-center">
+                        <h2 class="text-4xl font-bold mb-4">Portal de Capacitaciones</h2>
+                        <p class="text-blue-100">Elige la modalidad que mejor se adapte a tu tiempo.</p>
+                    </div>
+                </section>
+
+                <div class="container mx-auto px-4 lg:px-8 -mt-8 relative z-10 mb-20">
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                        <div class="flex border-b border-gray-100">
+                            <button onclick="switchTab('virtual')" id="tabVirtual" class="flex-1 py-6 font-bold text-center tab-active hover:bg-gray-50 transition-all">Capacitaciones Virtuales</button>
+                            <button onclick="switchTab('presencial')" id="tabPresencial" class="flex-1 py-6 font-bold text-center text-gray-400 hover:bg-gray-50 transition-all">Capacitaciones Presenciales</button>
+                        </div>
+                        
+                        <div class="p-8 md:p-12">
+                            <!-- Virtual View -->
+                            <div id="viewVirtual" class="animate-fade-in">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                                    <div>
+                                        <h3 class="text-3xl font-bold text-gob-blue mb-6">Estudia a tu ritmo</h3>
+                                        <p class="text-gray-600 mb-8 leading-relaxed">Nuestra plataforma virtual te permite acceder a más de 50 cursos sobre tecnología, emprendimiento y desarrollo personal con certificados oficiales.</p>
+                                        <ul class="space-y-4 mb-10">
+                                            <li class="flex items-center space-x-3"><i data-lucide="clock" class="text-gob-accent w-5 h-5"></i> <span class="text-gray-700">Disponible 24/7</span></li>
+                                            <li class="flex items-center space-x-3"><i data-lucide="award" class="text-gob-accent w-5 h-5"></i> <span class="text-gray-700">Certificados digitales gratuitos</span></li>
+                                            <li class="flex items-center space-x-3"><i data-lucide="tablet" class="text-gob-accent w-5 h-5"></i> <span class="text-gray-700">Compatible con móviles</span></li>
+                                        </ul>
+                                        <a href="https://capacitacion.telecomunicaciones.gob.ec/" target="_blank" class="inline-block bg-gob-accent text-white px-10 py-4 rounded-xl font-bold shadow-lg hover:brightness-110 transition-all">Ir a la Plataforma Virtual</a>
+                                    </div>
+                                    <div class="bg-blue-50 p-8 rounded-3xl border border-blue-100">
+                                        <h4 class="font-bold text-gob-blue mb-4">Cursos Populares</h4>
+                                        <div class="space-y-3">
+                                            <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center">
+                                                <span class="text-sm font-semibold">Introducción a la IA</span>
+                                                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Gratis</span>
+                                            </div>
+                                            <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center">
+                                                <span class="text-sm font-semibold">Ciberseguridad Básica</span>
+                                                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Gratis</span>
+                                            </div>
+                                            <div class="bg-white p-4 rounded-xl shadow-sm flex justify-between items-center">
+                                                <span class="text-sm font-semibold">Python para principiantes</span>
+                                                <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Gratis</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Presencial View -->
+                            <div id="viewPresencial" class="hidden animate-fade-in">
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    <!-- Card Presencial 1 -->
+                                    <div class="border border-gray-100 rounded-2xl overflow-hidden hover-card bg-white">
+                                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80" class="w-full h-40 object-cover" alt="Clase">
+                                        <div class="p-6">
+                                            <h4 class="font-bold text-gob-blue text-lg mb-2">Alfabetización Digital</h4>
+                                            <p class="text-xs text-gray-500 mb-4 flex items-center"><i data-lucide="calendar" class="w-4 h-4 mr-1"></i> Inicia: 15 de Octubre | 09:00 AM</p>
+                                            <p class="text-sm text-gray-600 mb-6 line-clamp-2">Ideal para adultos mayores que desean aprender a usar su primer computador y celular.</p>
+                                            <button onclick="openModal('Alfabetización Digital')" class="w-full bg-gob-accent text-white py-3 rounded-xl font-bold hover:brightness-110 shadow-md">Inscribirme ahora</button>
+                                        </div>
+                                    </div>
+                                    <!-- Card Presencial 2 -->
+                                    <div class="border border-gray-100 rounded-2xl overflow-hidden hover-card bg-white">
+                                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80" class="w-full h-40 object-cover" alt="Office">
+                                        <div class="p-6">
+                                            <h4 class="font-bold text-gob-blue text-lg mb-2">Dominio de Office 365</h4>
+                                            <p class="text-xs text-gray-500 mb-4 flex items-center"><i data-lucide="calendar" class="w-4 h-4 mr-1"></i> Inicia: 20 de Octubre | 03:00 PM</p>
+                                            <p class="text-sm text-gray-600 mb-6 line-clamp-2">Aprende Word, Excel y PowerPoint desde cero para mejorar tus trabajos escolares.</p>
+                                            <button onclick="openModal('Herramientas Ofimáticas')" class="w-full bg-gob-accent text-white py-3 rounded-xl font-bold hover:brightness-110 shadow-md">Inscribirme ahora</button>
+                                        </div>
+                                    </div>
+                                    <!-- Card Presencial 3 -->
+                                    <div class="border border-gray-100 rounded-2xl overflow-hidden hover-card bg-white">
+                                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80" class="w-full h-40 object-cover" alt="Marketing">
+                                        <div class="p-6">
+                                            <h4 class="font-bold text-gob-blue text-lg mb-2">Diseño y Marketing</h4>
+                                            <p class="text-xs text-gray-500 mb-4 flex items-center"><i data-lucide="calendar" class="w-4 h-4 mr-1"></i> Inicia: 22 de Octubre | 10:00 AM</p>
+                                            <p class="text-sm text-gray-600 mb-6 line-clamp-2">Crea contenido visual para tus redes sociales usando Canva y estrategias de venta.</p>
+                                            <button onclick="openModal('Marketing Digital')" class="w-full bg-gob-accent text-white py-3 rounded-xl font-bold hover:brightness-110 shadow-md">Inscribirme ahora</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `,
+            contacto: `
+                <section class="py-20">
+                    <div class="container mx-auto px-4 lg:px-8">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                            <div>
+                                <h2 class="text-4xl font-bold text-gob-blue mb-6">Estamos para ayudarte</h2>
+                                <p class="text-gray-600 mb-10 leading-relaxed">Visítanos directamente en nuestras instalaciones o escríbenos a través de nuestros canales oficiales. El facilitador del Punto Digital estará listo para guiarte.</p>
+                                
+                                <div class="space-y-8">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="bg-blue-50 p-4 rounded-xl text-gob-blue">
+                                            <i data-lucide="map-pin"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gob-blue">Dirección</h4>
+                                            <p class="text-gray-500 text-sm">Calle 10 de Agosto, Frente al Parque Central. Chaguarpamba, Loja.</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="bg-blue-50 p-4 rounded-xl text-gob-blue">
+                                            <i data-lucide="mail"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gob-blue">Email</h4>
+                                            <p class="text-gray-500 text-sm">punto.chaguarpamba@telecomunicaciones.gob.ec</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="bg-blue-50 p-4 rounded-xl text-gob-blue">
+                                            <i data-lucide="clock"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gob-blue">Atención Ciudadana</h4>
+                                            <p class="text-gray-500 text-sm">Lunes a Viernes: 08h00 a 13h00 - 14h00 a 17h00</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded-3xl shadow-xl p-4 h-[450px] overflow-hidden border border-gray-100">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.790934988456!2d-79.6432!3d-3.8762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwNTInMzQuMyJTIDc5wrAzOCczNS41Ilc!5e0!3m2!1ses!2sec!4v1650000000000" class="w-full h-full rounded-2xl" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        // ==================== LÓGICA DE NAVEGACIÓN ====================
+        function navigate(viewName) {
+            const main = document.getElementById('mainContent');
+            main.innerHTML = views[viewName] || views.inicio;
+            lucide.createIcons();
+            window.scrollTo(0, 0);
+            
+            // Cerrar menú móvil si está abierto
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.add('hidden');
+            
+            // Re-ejecutar animaciones
+            initAnimations();
+            
+            // Lógica especial para contadores en Inicio
+            if (viewName === 'inicio') {
+                animateCounter('counterPuntos', 915, 2000);
+            }
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // ==================== LÓGICA DE TABS ====================
+        function switchTab(type) {
+            const vTab = document.getElementById('tabVirtual');
+            const pTab = document.getElementById('tabPresencial');
+            const vView = document.getElementById('viewVirtual');
+            const pView = document.getElementById('viewPresencial');
+
+            if (type === 'virtual') {
+                vTab.className = 'flex-1 py-6 font-bold text-center tab-active hover:bg-gray-50 transition-all';
+                pTab.className = 'flex-1 py-6 font-bold text-center text-gray-400 hover:bg-gray-50 transition-all';
+                vView.classList.remove('hidden');
+                pView.classList.add('hidden');
+            } else {
+                pTab.className = 'flex-1 py-6 font-bold text-center tab-active hover:bg-gray-50 transition-all';
+                vTab.className = 'flex-1 py-6 font-bold text-center text-gray-400 hover:bg-gray-50 transition-all';
+                pView.classList.remove('hidden');
+                vView.classList.add('hidden');
+            }
+            lucide.createIcons();
+        }
+
+        // ==================== LÓGICA DE MODAL ====================
+        function openModal(courseName = "") {
+            const body = document.body;
+            const select = document.querySelector('select[name="curso"]');
+            if(courseName && select) select.value = courseName;
+            body.classList.add('modal-show');
+        }
+
+        function closeModal() {
+            document.body.classList.remove('modal-show');
+            document.getElementById('enrollmentForm').reset();
+            document.getElementById('formFeedback').classList.add('hidden');
+        }
+
+        // ==================== FORMULARIO & BACKEND ====================
+        const SCRIPT_URL = ""; // Pegar aquí la URL del Google Apps Script
+
+        document.getElementById('enrollmentForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const feedback = document.getElementById('formFeedback');
+            const formData = new FormData(e.target);
+            
+            // Efecto de carga
+            btn.disabled = true;
+            btn.innerHTML = `<span class="loader"></span> ENVIANDO...`;
+
+            try {
+                // Simulación de envío (Reemplazar con fetch real si se configura Apps Script)
+                console.log("Datos enviados:", Object.fromEntries(formData));
+                
+                await new Promise(r => setTimeout(r, 1500)); // Simula latencia
+                
+                feedback.innerHTML = "¡Inscripción exitosa! El facilitador se contactará contigo pronto.";
+                feedback.className = "mt-4 p-4 rounded-lg text-center font-medium bg-green-100 text-green-800";
+                feedback.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    closeModal();
+                }, 3000);
+
+            } catch (error) {
+                feedback.innerHTML = "Hubo un error. Por favor intenta de nuevo.";
+                feedback.className = "mt-4 p-4 rounded-lg text-center font-medium bg-red-100 text-red-800";
+                feedback.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = "ENVIAR INSCRIPCIÓN";
+            }
+        };
+
+        // ==================== ANIMACIONES ====================
+        function animateCounter(id, target, duration) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            let start = 0;
+            const increment = Math.ceil(target / (duration / 16));
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    el.innerText = target;
+                    clearInterval(timer);
+                } else {
+                    el.innerText = start;
+                }
+            }, 16);
+        }
+
+        function initAnimations() {
+            const elements = document.querySelectorAll('.fade-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // Parallax simple
+        window.addEventListener('scroll', () => {
+            const parallax = document.querySelector('.parallax-bg');
+            if (parallax) {
+                let scroll = window.pageYOffset;
+                parallax.style.transform = `translateY(${scroll * 0.4}px)`;
+            }
+        });
+
+        // Inicialización
+        window.onload = () => {
+            navigate('inicio');
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
