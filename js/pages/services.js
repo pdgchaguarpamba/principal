@@ -5,12 +5,12 @@
 
 function renderServices() {
   const svs = [
-    { icon: 'monitor',      title: 'Internet Libre', desc: 'Investigación escolar, estudios y teletrabajo.' },
-    { icon: 'printer',      title: 'Impresiones',    desc: 'Tareas y documentos oficiales gratuitos.' },
-    { icon: 'check-circle', title: 'Trámites GOB',   desc: 'Registro Civil, IESS, SRI y antecedentes.' },
-    { icon: 'cpu',          title: 'Soporte TIC',    desc: 'Ayuda en dispositivos y software educativo.' },
-    { icon: 'book-open',    title: 'Biblioteca',     desc: 'Acceso a miles de recursos pedagógicos.' },
-    { icon: 'users',        title: 'Co-working',     desc: 'Espacio para emprendedores y juntas.' }
+    { icon: 'monitor', title: 'Acceso a Internet', desc: 'Navegación libre y gratuita para investigación escolar, estudios universitarios y teletrabajo.' },
+    { icon: 'printer', title: 'Impresiones y Escaneo', desc: 'Servicio gratuito para tareas escolares y tramites requeridos por la ciudadanía.' },
+    { icon: 'check-circle', title: 'Gobierno en Línea', desc: 'Asesoría para obtener turnos del Registro Civil, certificados de antecedentes, IESS, SRI, Contraloría y otros.' },
+    { icon: 'cpu', title: 'Soporte TIC', desc: 'Apoyo a ciudadanos en el uso de herramientas digitales, correo electrónico y dispositivos móviles.' },
+    { icon: 'book-open', title: 'Biblioteca Digital', desc: 'Acceso a miles de recursos educativos, libros digitales y plataformas de investigación científica.' },
+    { icon: 'users', title: 'Espacio Co-working', desc: 'Áreas equipadas para reuniones de emprendedores, capacitaciones grupales y juntas comunitarias.' }
   ];
 
   return `
