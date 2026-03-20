@@ -42,8 +42,8 @@ const newsData = [
 const presencialCourses = [
   {
     title: "Pintura en Cerámica",
-    date: "25 de Marzo",
-    time: "Por definir",
+    date: "01 y 02 de Abril",
+    time: "Hora: Por definir",
     img: "https://img.freepik.com/foto-gratis/elemento-pintura-manos-primer-plano_23-2148878463.jpg?semt=ais_hybrid&w=740&q=80",
     d: "Aprende técnicas de decoración y pintura sobre piezas de cerámica. Expresa tu creatividad."
   },
@@ -90,7 +90,7 @@ const virtualPlatforms = [
     name: "Capacitate para el Empleo",
     logo: "https://capacitateparaelempleo.org/sites/default/files/logo-cpe.png",
     desc: "Plataforma oficial de Educación Digital Nacional con certificación gratuita.",
-    img: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800",
+    img: "https://fundacioncarlosslim.org/wp-content/uploads/2023/04/Capacitate-para-el-empleoimg.jpg",
     link: "https://capacitateparaelempleo.org/"
   }
 ];
